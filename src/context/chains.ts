@@ -4,9 +4,10 @@ import { ChainMap, ChainMetadata, ChainMetadataSchema } from '@hyperlane-xyz/sdk
 
 import ChainsJson from '../consts/chains.json';
 import { chains as ChainsTS } from '../consts/chains';
-//import ChainsYaml from '../consts/chains.yaml';
+import ChainsYaml from '../consts/chains.yaml';
 import { logger } from '../utils/logger';
-import { Address } from '@hyperlane-xyz/utils';
+//import { Address } from '@hyperlane-xyz/utils';
+//import { cosmosDefaultChain } from '@/features/chains/cosmosDefault';
 
 export const ChainConfigSchema = z.record(
   ChainMetadataSchema.and(z.object({ mailbox: z.string().optional() })),
@@ -15,8 +16,9 @@ export const ChainConfigSchema = z.record(
 export function getChainConfigs() {
   // Chains must include a cosmos chain or CosmosKit throws errors
   const result = ChainConfigSchema.safeParse({
-    // cosmoshub: cosmosDefaultChain,
+    //cosmoshub: cosmosDefaultChain,
     ...ChainsJson,
+    ...ChainsYaml,
     ...ChainsTS,
   });
   if (!result.success) {

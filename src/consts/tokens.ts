@@ -99,7 +99,7 @@ export const tokenConfigs: WarpCoreConfig = {
       logoURI: '/logos/celestia.png',
       connections: [
         {
-          token: 'cosmos',
+          token: 'cosmos|stride|stride1ej9893p4stg5lyrksaxhtk7ystvy9vp66dlagyvtzycuagjlxkdsxcly6h',
           type: TokenConnectionType.Ibc,
           sourcePort: 'transfer',
           sourceChannel: isMainnet ? 'channel-4' : 'channel-78',

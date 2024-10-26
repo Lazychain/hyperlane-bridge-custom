@@ -1,7 +1,7 @@
 import { ChainMap, ChainMetadata, ExplorerFamily } from '@hyperlane-xyz/sdk';
 import { ProtocolType } from '@hyperlane-xyz/utils';
 
-// const isMainnet = process.env.NEXT_PUBLIC_NETWORK === 'mainnet';
+const isMainnet = process.env.NEXT_PUBLIC_NETWORK === 'mainnet';
 
 // A map of chain names to ChainMetadata
 // Chains can be defined here, in chains.json, or in chains.yaml
@@ -33,7 +33,7 @@ export const chains: ChainMap<ChainMetadata & { mailbox?: Address }> = {
       },
     ],
   },
-  /*stride: isMainnet
+  stride: isMainnet
     ? {
         protocol: ProtocolType.Cosmos,
         isTestnet: false,
@@ -146,8 +146,8 @@ export const chains: ChainMap<ChainMetadata & { mailbox?: Address }> = {
         transactionOverrides: {
           gasPrice: 0.1,
         },
-      },*/
-  /*sketchpad: {
+      },
+  sketchpad: {
     name: 'sketchpad',
     displayName: 'Forma Sketchpad',
     displayNameShort: 'Sketchpad',
@@ -171,5 +171,5 @@ export const chains: ChainMap<ChainMetadata & { mailbox?: Address }> = {
         family: ExplorerFamily.Blockscout,
       },
     ],
-  },*/
+  },
 };

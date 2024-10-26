@@ -31,17 +31,16 @@ export default function App({ Component, pageProps }: AppProps) {
   }
 
   return (
-    <ErrorBoundary>
-      <EvmWalletContext>
-        <CosmosWalletContext>
+     <>
+        
           <QueryClientProvider client={reactQueryClient}>
             <AppLayout>
               <Component {...pageProps} />
             </AppLayout>
           </QueryClientProvider>
           <ToastContainer transition={Zoom} position={'bottom-right'} limit={2} />
-        </CosmosWalletContext>
-      </EvmWalletContext>
-    </ErrorBoundary>
+         
+      </>
+    
   );
 }

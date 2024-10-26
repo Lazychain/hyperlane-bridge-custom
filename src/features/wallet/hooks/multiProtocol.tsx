@@ -51,7 +51,7 @@ export function useAccounts(): {
       accounts: {
         [ProtocolType.Ethereum]: evmAccountInfo,
         [ProtocolType.Cosmos]: cosmAccountInfo,
-        [ProtocolType.Fuel]: { protocol: ProtocolType.Fuel, isReady: false, addresses: [] },
+        
       },
       readyAccounts,
     }),
@@ -105,7 +105,6 @@ export function useConnectFns(): Record<ProtocolType, () => void> {
     () => ({
       [ProtocolType.Ethereum]: onConnectEthereum,
       [ProtocolType.Cosmos]: onConnectCosmos,
-      [ProtocolType.Fuel]: () => alert('TODO'),
     }),
     [onConnectEthereum, onConnectCosmos],
   );
@@ -130,9 +129,6 @@ export function useDisconnectFns(): Record<ProtocolType, () => Promise<void>> {
     () => ({
       [ProtocolType.Ethereum]: onClickDisconnect(ProtocolType.Ethereum, disconnectEvm),
       [ProtocolType.Cosmos]: onClickDisconnect(ProtocolType.Cosmos, disconnectCosmos),
-      [ProtocolType.Fuel]: onClickDisconnect(ProtocolType.Fuel, () => {
-        'TODO';
-      }),
     }),
     [disconnectEvm, disconnectCosmos],
   );
@@ -154,9 +150,7 @@ export function useActiveChains(): {
     () => ({
       chains: {
         [ProtocolType.Ethereum]: evmChain,
-
         [ProtocolType.Cosmos]: cosmChain,
-        [ProtocolType.Fuel]: {},
       },
       readyChains,
     }),
@@ -175,10 +169,7 @@ export function useTransactionFns(): Record<ProtocolType, ChainTransactionFns> {
     () => ({
       [ProtocolType.Ethereum]: { sendTransaction: onSendEvmTx, switchNetwork: onSwitchEvmNetwork },
       [ProtocolType.Cosmos]: { sendTransaction: onSendCosmTx, switchNetwork: onSwitchCosmNetwork },
-      [ProtocolType.Fuel]: {
-        sendTransaction: () => alert('TODO') as any,
-        switchNetwork: () => alert('TODO') as any,
-      },
+      
     }),
     [
       onSendEvmTx,

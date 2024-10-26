@@ -12,6 +12,7 @@ const MenuIcon = () => {
     setIsOpen(!isOpen);
     alert("funciona");
   };
+  
   return (
     < button onClick={handleClick} className=''>
       <Image src={menuIcon} alt="menu" className='hamburger-icon'></Image>

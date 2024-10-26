@@ -29,6 +29,10 @@ export function initWarpContext() {
   const chains = getChainConfigs();
   const multiProvider = new MultiProtocolProvider<{ mailbox?: Address }>(chains);
   const coreConfig = getWarpCoreConfig();
+  // console.log("multiprovider", multiProvider);
+  // console.log("coreConfig",JSON.stringify(coreConfig.tokens));
+  
+  
   const warpCore = WarpCore.FromConfig(multiProvider, coreConfig);
 
   for (let i = 0; i < warpCore.tokens.length; i++) {
@@ -41,7 +45,8 @@ export function initWarpContext() {
       };
     }
   }
-
+  console.log("finish");
+  
   return { chains, multiProvider, warpCore };
 }
 

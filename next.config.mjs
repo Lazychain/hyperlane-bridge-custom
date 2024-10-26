@@ -1,11 +1,8 @@
 /** @type { import('next').NextConfig } */
 
-import { createRequire } from 'module';
 
-const require = createRequire(import.meta.url);
-
-const version = require('./package.json');
-const { withSentryConfig } = require("@sentry/nextjs");
+import version from './package.json' assert{type: 'json'};
+//import withSentryConfig from "@sentry/nextjs";
 /*const withBundleAnalyzer = require('@next/bundle-analyzer')({
 enabled: process.env.ANALYZE === 'true',
 })*/
@@ -33,7 +30,7 @@ const cspHeader = `
   ${!isDev ? 'upgrade-insecure-requests;' : ''}
 `.replace(/\s{2,}/g, ' ').trim();
 
- const securityHeaders = [
+const securityHeaders = [
   {
     key: 'X-XSS-Protection',
     value: '1; mode=block',
@@ -101,10 +98,10 @@ const nextConfig = {
     hideSourceMaps: true,
     tunnelRoute: "/monitoring-tunnel",
   },
-  
+
 }
 
-const sentryWebpackPluginOptions = {
+/*const sentryWebpackPluginOptions = {
   org: "hyperlane",
   project: "warp-ui",
   authToken: process.env.SENTRY_AUTH_TOKEN,
@@ -113,7 +110,7 @@ const sentryWebpackPluginOptions = {
     excludeReplayIframe: true,
     excludeReplayShadowDom: true,
   },
-};
+};*/
 
 //module.exports = withBundleAnalyzer(withSentryConfig(nextConfig, sentryWebpackPluginOptions));
 export default nextConfig;

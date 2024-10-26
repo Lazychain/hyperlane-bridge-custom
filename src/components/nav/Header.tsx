@@ -1,3 +1,4 @@
+'use client'
 import Link from 'next/link';
 
 import { WalletControlBar } from '../../features/wallet/WalletControlBar';
@@ -10,7 +11,7 @@ interface Props {
 }
 
 export function Header({ isSideBarOpen = false, setIsSideBarOpen }: Props) {
-  const handleHeaderClick = (e) => {
+  const handleHeaderClick = (e: { clientX: any; currentTarget: any; }) => {
     const clickX = e.clientX;
     // Calculate the width in pixels (22 rem)
     const headerElement = e.currentTarget;

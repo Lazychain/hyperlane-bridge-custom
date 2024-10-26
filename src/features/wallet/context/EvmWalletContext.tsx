@@ -29,11 +29,16 @@ const queryClient = new QueryClient();
 
 export function EvmWalletContext(
   { children }: PropsWithChildren<unknown>) {
+    
   const initialChain = useMemo(() => {
     const tokens = getWarpCore().tokens;
     const firstEvmToken = tokens.filter((token): boolean => token.protocol === ProtocolType.Ethereum)?.[0];
-    return tryGetChainMetadata(firstEvmToken?.chainName)?.chainId as number;
+    const result = tryGetChainMetadata(firstEvmToken?.chainName);
+    const chainName = result?.chainId as number;
+      
+    return chainName;
   }, []);
+  
   return (
     <WagmiProvider config={connectorConfig}>
       <QueryClientProvider client={queryClient}>

@@ -21,7 +21,7 @@ export enum Color {
 
 // Useful for cases when using class names isn't convenient
 // such as in svg fills
-export function classNameToColor(className) {
+export function classNameToColor(className: string) {
   switch (className) {
     case 'bg-blue-500':
       return Color.primaryBlue;

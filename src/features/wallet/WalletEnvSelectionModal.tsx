@@ -3,7 +3,7 @@ import { PropsWithChildren } from 'react';
 
 import { chainMetadata } from '@hyperlane-xyz/registry';
 import { ProtocolType } from '@hyperlane-xyz/utils';
-import { ChainLogo } from '@hyperlane-xyz/widgets';
+import { ChainLogo } from '../../components/icons/ChainLogo';
 
 import { Modal } from '../../components/layout/Modal';
 
@@ -25,7 +25,7 @@ export function WalletEnvSelectionModal({
     if (env == ProtocolType.Cosmos) {
       if (process.env.NEXT_PUBLIC_NETWORK === 'testnet' && window && (window as any).keplr) {
         const chains = await (window as any).keplr.getChainInfosWithoutEndpoints();
-        const hasStrideTestnet = chains.find((el) => el.chainId === 'stride-internal-1')
+        const hasStrideTestnet = chains.find((el: { chainId: string; }) => el.chainId === 'stride-internal-1')
           ? true
           : false;
         if (!hasStrideTestnet) {
@@ -131,7 +131,7 @@ function EnvButton({
   if (!logo) {
     if (!logoChainId) throw new Error('Either logo or logoChainId must be provided');
     if (typeof logoChainId !== 'number') throw new Error('logoChainId must be a number');
-    logo = <ChainLogo chainId={logoChainId} size={34} />;
+    logo = <ChainLogo chainId={logoChainId} size={34} chainName={''} />;
   }
   return (
     <button

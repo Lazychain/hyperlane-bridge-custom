@@ -88,7 +88,7 @@ const nextConfig = {
   },
 
   env: {
-    NEXT_PUBLIC_VERSION: version,
+    NEXT_PUBLIC_VERSION: "14.2.15",
   },
 
   reactStrictMode: true,

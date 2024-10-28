@@ -1,6 +1,5 @@
-'use client'
+/* 'use client'
 import React, { useState } from 'react';
-//import Image from 'next/image';
 import menuIcon from '../../../public/icons/menu-4.svg';
 import './menu.css';
 import Image from 'next/image';
@@ -20,5 +19,5 @@ const MenuIcon = () => {
   )
 }
 
-export default MenuIcon;
+export default MenuIcon; */
 

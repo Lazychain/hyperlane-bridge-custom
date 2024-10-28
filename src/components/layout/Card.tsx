@@ -6,9 +6,11 @@ interface Props {
 
 export function Card({ className, children }: PropsWithChildren<Props>) {
   return (
-    <div className={`bg-red-600 overflow-auto max-w-full w-100 relative border-[0.5px] border-solid border-white ${className}`} >
+    <div
+      className={`bg-[#0E0E0E] overflow-auto max-w-full w-100 relative border-[0.5px] border-solid border-white ${className}`}
+    >
       {children}
-    </div >
+    </div>
   );
 }
 

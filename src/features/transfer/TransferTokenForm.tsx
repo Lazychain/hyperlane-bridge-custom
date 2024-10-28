@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-'use client'
 import BigNumber from 'bignumber.js';
 import { Form, Formik, useFormikContext } from 'formik';
 import Image from 'next/image';
@@ -269,14 +268,25 @@ function RecipientSection({ isReview }: { isReview: boolean }) {
     setFieldValue('recipient', event.target.value);
   };
 
+  // COSMOS
   useEffect(() => {
     let account: any = null;
     // Check if the selected chain is in cosmosChainIds
-    if (['stride'].includes(values.destination)) {
+    if (['celestia', 'stride'].includes(values.destination)) {
       account = accounts[ProtocolType.Cosmos].addresses.find(
         (address) => address.chainName === values.destination,
       );
     }
+    if (['celestia', 'stride'].includes(values.destination)) {
+      setPlaceholder(`${values.destination}1234...`);
+    } else {
+      setPlaceholder(defaultPlaceholder);
+    }
+  }, [cosmosAddress]);
+
+  // EVM
+  useEffect(()=>{
+    let account: any = null;
     if (['forma', 'sketchpad'].includes(values.destination)) {
       account = accounts[ProtocolType.Ethereum].addresses[0];
     }
@@ -288,13 +298,11 @@ function RecipientSection({ isReview }: { isReview: boolean }) {
       setFieldValue('recipient', '');
       setRecipientValue('');
     }
+  },[evmAddress])
 
-    if (['stride'].includes(values.destination)) {
-      setPlaceholder(`${values.destination}1234...`);
-    } else {
-      setPlaceholder(defaultPlaceholder);
-    }
-  }, [cosmosAddress, evmAddress, values.destination, accounts, setFieldValue]);
+ /*  useEffect(() => {
+   
+  }, [cosmosAddress, evmAddress, values.destination, accounts, setFieldValue]); */
 
   return (
     <div>

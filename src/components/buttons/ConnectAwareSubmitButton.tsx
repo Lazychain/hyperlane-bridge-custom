@@ -41,7 +41,7 @@ export function ConnectAwareSubmitButton<FormValues = any>({
 
   const amount = parseFloat(values.amount);
 
-  let color;
+  let color: any;
   let content;
   if (amount === 0) {
     content = 'Invalid amount';

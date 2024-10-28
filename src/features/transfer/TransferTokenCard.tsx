@@ -1,4 +1,4 @@
-/* import { SetStateAction, useState } from 'react';
+import { SetStateAction, useState } from 'react';
 
 import { Card } from '../../components/layout/Card';
 
@@ -34,9 +34,9 @@ export default function TransferTokenCard() {
       </>
     </Card>
   );
-} */
+} 
 
-  import { Card } from '../../components/layout/Card';
+ /* import { Card } from '../../components/layout/Card';
 
   import { TransferTokenForm } from './TransferTokenForm';
 
@@ -46,5 +46,5 @@ export default function TransferTokenCard (){
       <TransferTokenForm transferType={''} isReview={false} setIsReview={undefined} />
     </Card>
   );
-}
+}*/
 

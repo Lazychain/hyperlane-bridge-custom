@@ -4,10 +4,9 @@ import TokensJson from '../consts/tokens.json';
 import { tokenConfigs as TokensTS } from '../consts/tokens';
 import TokensYaml from '../consts/tokens.yaml';
 import { validateZodResult } from '../utils/zod';
-import { log } from 'console';
+
 
 export function getWarpCoreConfig(): WarpCoreConfig {
-  console.log("getWarpCoreConfig start");
   const resultJson = WarpCoreConfigSchema.safeParse(TokensJson);
   const configJson = validateZodResult(resultJson, 'warp core json config');
   const resultYaml = WarpCoreConfigSchema.safeParse(TokensYaml);
@@ -17,7 +16,6 @@ export function getWarpCoreConfig(): WarpCoreConfig {
 
   const tokens = [...configTs.tokens, ...configJson.tokens, ...configYaml.tokens];
   const options = { ...configTs.options, ...configJson.options, ...configYaml.options };
-  // console.log("tokens",tokens);
-  // console.log("options", options);
+
   return { tokens, options };
 }

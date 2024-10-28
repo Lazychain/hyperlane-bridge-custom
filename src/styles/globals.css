@@ -99,6 +99,7 @@ input[type='search']::-webkit-search-results-decoration {
 /* Firefox */
 input[type='number'] {
   -moz-appearance: textfield;
+  appearance: none;
 }
 
 input[type='date'],

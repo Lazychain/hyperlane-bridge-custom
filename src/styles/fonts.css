@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bungee+Tint&display=swap');
+/*@import url('https://fonts.googleapis.com/css2?family=Bungee+Tint&display=swap');*/
 
 @font-face {
   font-family: 'IBM Plex Mono';
@@ -51,7 +51,6 @@
   font-family: 'Bungee-Shade';
   font-style: normal;
   font-weight: 400;
-  
   src: url('/fonts/bungee-shade.ttf') format('truetype');
 }
 

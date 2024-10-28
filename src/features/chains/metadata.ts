@@ -1,4 +1,4 @@
-import type { AssetList, Chain as CosmosChain } from '@chain-registry/v2-types';
+import type { AssetList, Chain as CosmosChain } from '@chain-registry/types';
 import type { Chain as WagmiChain } from 'viem';
 
 import { ChainName, chainMetadataToWagmiChain } from '@hyperlane-xyz/sdk';
@@ -19,13 +19,13 @@ export function getCosmosKitConfig(): { chains: CosmosChain[]; assets: AssetList
     (c) => c.protocol === ProtocolType.Cosmos,
   );
   const chains = cosmosChains.map((c) => ({
-    chainName: c.name,
-    chainType: <const>'cosmos',
+    chain_name: c.name,
+    chain_type: <const>'cosmos',
     status: <const>'live',
-    networkType: c.isTestnet ? <const>'testnet' : <const>'mainnet',
-    prettyName: c.displayName || c.name,
-    chainId: c.chainId as string,
-    bech32Prefix: c.bech32Prefix!,
+    network_type: c.isTestnet ? <const>'testnet' : <const>'mainnet',
+    pretty_name: c.displayName || c.name,
+    chain_id: c.chainId as string,
+    bech32_prefix: c.bech32Prefix!,
     slip44: c.slip44!,
     apis: {
       rpc: [
@@ -44,14 +44,14 @@ export function getCosmosKitConfig(): { chains: CosmosChain[]; assets: AssetList
         : [],
     },
     fees: {
-      feeTokens: [
+      fee_tokens: [
         {
           denom: 'token',
         },
       ],
     },
     staking: {
-      stakingTokens: [
+      staking_tokens: [
         {
           denom: 'stake',
         },
@@ -61,12 +61,12 @@ export function getCosmosKitConfig(): { chains: CosmosChain[]; assets: AssetList
   const assets = cosmosChains.map((c) => {
     if (!c.nativeToken) throw new Error(`Missing native token for ${c.name}`);
     return {
-      chainName: c.name,
-      typeAsset: <const>'cw20',
+      chain_name: c.name,
+      type_asset: <const>'cw20',
       assets: [
         {
           description: `The native token of ${c.displayName || c.name} chain.`,
-          denomUnits: [
+          denom_units: [
             {
               denom: 'token',
               exponent: c.nativeToken.decimals,
@@ -76,11 +76,11 @@ export function getCosmosKitConfig(): { chains: CosmosChain[]; assets: AssetList
           name: 'token',
           display: 'token',
           symbol: 'token',
-          typeAsset: <const>'sdk.coin',
+          type_asset: <const>'sdk.coin',
         },
         {
           description: `The native token of ${c.displayName || c.name} chain.`,
-          denomUnits: [
+          denom_units: [
             {
               denom: 'token',
               exponent: c.nativeToken.decimals,
@@ -90,7 +90,7 @@ export function getCosmosKitConfig(): { chains: CosmosChain[]; assets: AssetList
           name: 'stake',
           display: 'stake',
           symbol: 'stake',
-          typeAsset: <const>'sdk.coin',
+          type_asset: <const>'sdk.coin',
         },
       ],
     };

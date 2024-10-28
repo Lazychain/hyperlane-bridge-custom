@@ -37,7 +37,7 @@ export function SideBarMenu({
   const { readyAccounts } = useAccounts();
   const didMountRef = useRef(false);
 
-  const { transfers, resetTransfers, transferLoading } = useStore((s) => ({
+  const { transfers, resetTransfers, transferLoading } = useStore((s: { transfers: any; resetTransfers: any; transferLoading: any; }) => ({
     transfers: s.transfers,
     resetTransfers: s.resetTransfers,
     transferLoading: s.transferLoading,

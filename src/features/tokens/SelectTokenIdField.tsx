@@ -21,7 +21,7 @@ export function SelectTokenIdField({ name, disabled }: Props) {
   };
 
   const isLoading = false;
-  const tokenIds = [];
+  const tokenIds: string[] | null | undefined = [];
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 

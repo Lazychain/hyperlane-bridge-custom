@@ -1,4 +1,4 @@
-//import Image from 'next/image';
+import Image from 'next/image';
 
 import ArrowRightIcon from '../../images/icons/arrow-right.svg';
 
@@ -16,7 +16,7 @@ export function Banner() {
         <a href={modularspringUrl} target="_blank" rel="noopener noreferrer">
           <p className="text-black font-semibold text-l flex gap-2 hover:underline">
             {modularspringText}
-            <img
+            <Image
               className="ml-2 brightness-0"
               src={ArrowRightIcon}
               width={24}

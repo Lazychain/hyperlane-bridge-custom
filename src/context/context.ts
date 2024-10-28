@@ -1,3 +1,5 @@
+import {IRegistry} from '@hyperlane-xyz/registry';
+
 import { ChainMap, ChainMetadata, ChainName, IToken, MultiProtocolProvider, Token, WarpCore } from '@hyperlane-xyz/sdk';
 import { isNullish } from '@hyperlane-xyz/utils';
 
@@ -7,6 +9,7 @@ import { getChainConfigs } from './chains';
 import { getWarpCoreConfig } from './tokens';
 
 export interface WarpContext {
+  registry?: IRegistry;
   chains: ChainMap<ChainMetadata & { mailbox?: Address }>;
   multiProvider: MultiProtocolProvider<{ mailbox?: Address }>;
   warpCore: WarpCore;
@@ -17,7 +20,7 @@ let warpContext: WarpContext;
 export function getWarpContext() {
   if (!warpContext) {
     warpContext = initWarpContext();
-  }
+  } 
   return warpContext;
 }
 
@@ -45,9 +48,13 @@ export function initWarpContext() {
       };
     }
   }
-  console.log("finish");
+  
   
   return { chains, multiProvider, warpCore };
+}
+
+export function getRegistry() {
+  return getWarpContext().registry;
 }
 
 export function getMultiProvider() {

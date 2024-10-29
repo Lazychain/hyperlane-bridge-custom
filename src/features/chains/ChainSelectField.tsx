@@ -87,7 +87,7 @@ export function ChainSelectField({ name, label, chains, onChange, disabled, tran
     if (env == ProtocolType.Cosmos) {
       if (process.env.NEXT_PUBLIC_NETWORK === 'testnet' && window && (window as any).keplr) {
         const chains = await (window as any).keplr.getChainInfosWithoutEndpoints();
-        const hasStrideTestnet = chains.find((el) => el.chainId === 'stride-internal-1')
+        const hasStrideTestnet = chains.find((el: { chainId: string; }) => el.chainId === 'stride-internal-1')
           ? true
           : false;
         if (!hasStrideTestnet) {

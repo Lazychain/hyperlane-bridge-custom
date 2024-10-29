@@ -1,7 +1,7 @@
 import { ChakraProvider, createSystem, defineConfig } from '@chakra-ui/react';
 import { ChainProvider } from '@cosmos-kit/react';
 import { wallets as keplrWallets } from '@cosmos-kit/keplr';
-//import { wallets as leapWallets } from '@cosmos-kit/leap';
+import { wallets as leapWallets } from '@cosmos-kit/leap';
 import { GasPrice } from '@cosmjs/stargate';
 import '@interchain-ui/react/styles';
 import { PropsWithChildren } from 'react';
@@ -39,7 +39,7 @@ export function CosmosWalletContext({ children }: PropsWithChildren<unknown>) {
         wallets={[
           ...keplrWallets,
           //...cosmostationWallets,
-          //...leapWallets,
+          ...leapWallets,
         ] as MainWalletBase[]}
         logLevel='DEBUG'
         walletConnectOptions={{

@@ -7,6 +7,7 @@ import { Color } from '../../styles/Color';
 import { Banner } from '../nav/Banner';
 import { Footer } from '../nav/Footer';
 import { Header } from '../nav/Header';
+import TransferTokenCard from '@/features/transfer/TransferTokenCard';
 
 export function AppLayout({ children }: PropsWithChildren) {
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
@@ -50,6 +51,7 @@ export function AppLayout({ children }: PropsWithChildren) {
               }`}
             onClick={handleClick}
           >
+            
             {children}
           </main>
           <Footer isSideBarOpen={isSideBarOpen} setIsSideBarOpen={setIsSideBarOpen} />

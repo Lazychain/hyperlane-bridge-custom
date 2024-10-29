@@ -8,7 +8,7 @@ const isMainnet = process.env.NEXT_PUBLIC_NETWORK === 'mainnet';
 export const tokenConfigs: WarpCoreConfig = {
   tokens: [
     // TIA Celestia to Stride
-   /* {
+    {
       chainName: 'celestia',
       standard: TokenStandard.CosmosIbc,
       name: 'TIA',
@@ -41,7 +41,7 @@ export const tokenConfigs: WarpCoreConfig = {
           sourceChannel: isMainnet ? 'channel-4' : 'channel-78',
         },
       ],
-    },*/
+    },
 
     // TIA on Stride to Forma
     {

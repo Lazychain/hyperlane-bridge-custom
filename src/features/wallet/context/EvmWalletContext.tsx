@@ -5,7 +5,7 @@ import { PropsWithChildren, useMemo } from 'react';
 import { getWarpCore } from '@/context/context';
 import { ProtocolType } from '@hyperlane-xyz/utils';
 import { tryGetChainMetadata } from '@/features/chains/utils';
-import connectorConfig from '../hooks/config';
+import { connectorConfig } from '../hooks/config';
 
 const queryClient = new QueryClient();
 

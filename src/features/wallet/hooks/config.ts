@@ -1,16 +1,11 @@
-import { http, createConfig } from 'wagmi';
-import { mainnet } from 'wagmi/chains';
+import { http } from '@wagmi/core';
+import { mainnet } from '@wagmi/core/chains';
 import { getDefaultConfig } from '@rainbow-me/rainbowkit';
 import { APP_NAME } from '@/consts/app';
 import { config } from '@/consts/config';
-/*const config = createConfig({
-  chains: [mainnet],
-  transports: {
-    [mainnet.id]: http(),
-  }
-})*/
 
-const connectorConfig = getDefaultConfig({
+
+export const connectorConfig = getDefaultConfig({
   appName: APP_NAME,
   projectId: config.walletConnectProjectId,
   chains: [mainnet],
@@ -19,6 +14,6 @@ const connectorConfig = getDefaultConfig({
   },
 })
 
-export default connectorConfig;
+
 
 

@@ -1,5 +1,6 @@
 import { useConnectModal } from '@rainbow-me/rainbowkit';
-import { sendTransaction, switchChain, waitForTransactionReceipt } from '@wagmi/core';
+import { sendTransaction, switchChain, waitForTransactionReceipt, http, createConfig } from '@wagmi/core';
+import {mainnet} from '@wagmi/core/chains';
 import { useCallback, useMemo } from 'react';
 import { useAccount, useDisconnect } from 'wagmi';
 
@@ -11,7 +12,14 @@ import { getChainMetadata, tryGetChainMetadata } from '../../chains/utils';
 import { ethers5TxToWagmiTx } from '../utils';
 
 import { AccountInfo, ActiveChainInfo, ChainTransactionFns } from './types';
-import connectorConfig from '../hooks/config';
+//import { connectorConfig } from '../hooks/config';
+
+ const connectorConfig = createConfig({
+  chains: [mainnet],
+  transports: {
+    [mainnet.id]: http(''),
+  }
+}) 
 
 export function useEvmAccount(): AccountInfo {
   const { address, isConnected, connector } = useAccount();
@@ -78,10 +86,10 @@ export function useEvmTransactionFns(): ChainTransactionFns {
       if (activeChainName && activeChainName !== chainName) await onSwitchNetwork(chainName);
 
       // Since the network switching is not foolproof, we also force a network check here
-      const chainId = getChainMetadata(chainName).chainId as number;
+      const chainId = getChainMetadata(chainName).chainId as any;
       logger.debug('Checking wallet current chain');
       const chains = connectorConfig.chains;
-      assert(chains.find(chain => chain.id === chainId),
+      assert(chains.find((chain: { id: number }) => chain.id == chainId),
         `Wallet not on chain ${chainName} (ChainMismatchError)`,
       );
 

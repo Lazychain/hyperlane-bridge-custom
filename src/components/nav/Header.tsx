@@ -1,8 +1,8 @@
 'use client'
 import Link from 'next/link';
-import Image from 'next/image';
+//import Image from 'next/image';
 import { WalletControlBar } from '../../features/wallet/WalletControlBar';
-import Logo from '../../images/logos/forma.png';
+//import Logo from '../../images/logos/forma.png';
 
 
 interface Props {
@@ -31,8 +31,8 @@ export function Header({ isSideBarOpen = false, setIsSideBarOpen }: Props) {
     >
       <div className="flex justify-between items-center">
         <Link href="/" className={`py-2 flex items-center ${isSideBarOpen ? 'opacity-50' : ''} `}>
-          {/* <h1 style={{fontFamily:'Bungee-Shade', fontStyle:'normal', fontWeight: 400, fontSize:40, color:'white'}}>LazyChain</h1> */}
-          <Image src={Logo} height={40} alt="Forma Bridge" />
+          <h1 style={{fontFamily:'Bungee-Shade', fontStyle:'normal', fontWeight: 400, fontSize:40, color:'white'}}>LazyChain</h1>
+          {/* <Image src={Logo} height={40} alt="Forma Bridge" /> */}
         </Link>
         <div className="flex flex-col items-end md:flex-row-reverse md:items-start gap-2">
           <WalletControlBar isSideBarOpen={isSideBarOpen} setIsSideBarOpen={setIsSideBarOpen} />

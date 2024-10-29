@@ -7,20 +7,8 @@ import { config } from '../../../consts/config';
 import { logger } from '../../../utils/logger';
 import { getChainProtocol, tryGetChainProtocol } from '../../chains/utils';
 
-import {
-  useCosmosAccount,
-  useCosmosActiveChain,
-  useCosmosConnectFn,
-  useCosmosDisconnectFn,
-  useCosmosTransactionFns,
-} from './cosmos';
-import {
-  useEvmAccount,
-  useEvmActiveChain,
-  useEvmConnectFn,
-  useEvmDisconnectFn,
-  useEvmTransactionFns,
-} from './evm';
+import { useCosmosAccount, useCosmosActiveChain, useCosmosConnectFn, useCosmosDisconnectFn, useCosmosTransactionFns } from './cosmos';
+import { useEvmAccount, useEvmActiveChain, useEvmConnectFn, useEvmDisconnectFn, useEvmTransactionFns } from './evm';
 
 import { AccountInfo, ActiveChainInfo, ChainTransactionFns } from './types';
 

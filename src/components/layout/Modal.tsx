@@ -1,4 +1,4 @@
-import { Dialog, DialogPanel, DialogTitle ,TransitionChild, Transition } from '@headlessui/react';
+import { Dialog, DialogPanel, DialogTitle, TransitionChild, Transition } from '@headlessui/react';
 import { Fragment, PropsWithChildren } from 'react';
 
 import XCircle from '../../images/icons/x-circle.svg';
@@ -47,11 +47,9 @@ export function Modal({
               leaveTo="opacity-0 scale-95"
             >
               <DialogPanel
-                className={`bg-black text-primary w-full ${
-                  width || 'max-w-xs'
-                } md:min-h-[357px] mt-20 mr-2 max-h-[90vh] transform overflow-auto ${
-                  padding || ''
-                } text-left transition-all 
+                className={`bg-black text-primary w-full ${width || 'max-w-xs'
+                  } md:min-h-[357px] mt-20 mr-2 max-h-[90vh] transform overflow-auto ${padding || ''
+                  } text-left transition-all 
                 border-2 border-solid border-white
                 `}
               >
@@ -82,3 +80,5 @@ export function Modal({
     </Transition>
   );
 }
+
+

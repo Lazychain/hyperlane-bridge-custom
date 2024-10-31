@@ -29,10 +29,9 @@ export function CosmosWalletContext({ children }: PropsWithChildren<unknown>) {
   //const leapWithoutSnap = leapWallets.filter((wallet) => !wallet.walletName.includes('snap'));
   // TODO replace Chakra here with a custom modal for ChainProvider
   // Using Chakra + @cosmos-kit/react instead of @cosmos-kit/react-lite adds about 600Kb to the bundle
-  
+
   return (
     <ChakraProvider value={themeSystem}>
-
       <ChainProvider
         chains={[...chains]}
         assetLists={[...assets]}
@@ -52,7 +51,7 @@ export function CosmosWalletContext({ children }: PropsWithChildren<unknown>) {
               icons: [],
             },
           },
-        }} 
+        }}
         signerOptions={{
           signingCosmwasm: () => {
             return {
@@ -77,8 +76,8 @@ export function CosmosWalletContext({ children }: PropsWithChildren<unknown>) {
         }}>
         {children}
       </ChainProvider>
-
     </ChakraProvider>
+
 
   );
 }

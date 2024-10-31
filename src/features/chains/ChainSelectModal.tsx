@@ -1,5 +1,5 @@
-import { ChainLogo } from '../../components/icons/ChainLogo';
-import { Modal } from '../../components/layout/Modal';
+import { ChainLogo } from '@/components/icons/ChainLogo';
+import { Modal } from '@/components/layout/Modal';
 
 import { getChainDisplayName } from './utils';
 

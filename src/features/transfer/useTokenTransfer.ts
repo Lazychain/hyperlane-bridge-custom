@@ -8,12 +8,7 @@ import { toastTxSuccess } from '../../components/toast/TxSuccessToast';
 import { getTokenByIndex, getWarpCore } from '../../context/context';
 import { logger } from '../../utils/logger';
 import { AppState, useStore } from '../store';
-import {
-  getAccountAddressForChain,
-  useAccounts,
-  useActiveChains,
-  useTransactionFns,
-} from '../wallet/hooks/multiProtocol';
+import { getAccountAddressForChain, useAccounts, useActiveChains, useTransactionFns } from '../wallet/hooks/multiProtocol';
 
 import { TransferContext, TransferFormValues, TransferStatus } from './types';
 import { tryGetMsgIdFromTransferReceipt } from './utils';

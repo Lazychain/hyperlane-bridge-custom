@@ -23,13 +23,8 @@ import { SelectOrInputTokenIds } from '../tokens/SelectOrInputTokenIds';
 import { TokenSelectField } from '../tokens/TokenSelectField';
 // import { useIsApproveRequired } from '../tokens/approval';
 import { useDestinationBalance, useOriginBalance } from '../tokens/balances';
-import {
-  getAccountAddressAndPubKey,
-  useAccountAddressForChain,
-  useAccounts,
-  useConnectFns,
-} from '../wallet/hooks/multiProtocol';
-import { AccountInfo } from '../wallet/hooks/types';
+import { getAccountAddressAndPubKey, useAccountAddressForChain, useAccounts, useConnectFns } from '../wallet/hooks/multiProtocol';
+import { AccountInfo, ChainAddress } from '../wallet/hooks/types';
 
 import { useFetchMaxAmount } from './maxAmount';
 import { TransferFormValues } from './types';
@@ -44,7 +39,7 @@ export function TransferTokenForm({
 }: {
   transferType: string;
   isReview: boolean;
-  setIsReview: any;
+  setIsReview: (b: boolean) => void;
 }) {
   const initialValues = useFormInitialValues();
   const { accounts } = useAccounts();
@@ -106,31 +101,7 @@ export function TransferTokenForm({
   );
 }
 
-// function SwapChainsButton({ disabled }: { disabled?: boolean }) {
-//   const { values, setFieldValue } = useFormikContext<TransferFormValues>();
-//   const { origin, destination } = values;
 
-//   const onClick = () => {
-//     if (disabled) return;
-//     setFieldValue('origin', destination);
-//     setFieldValue('destination', origin);
-//     // Reset other fields on chain change
-//     setFieldValue('tokenIndex', undefined);
-//     setFieldValue('recipient', '');
-//   };
-
-//   return (
-//     <IconButton
-//       imgSrc={SwapIcon}
-//       width={22}
-//       height={22}
-//       title="Swap chains"
-//       classes={!disabled ? 'hover:rotate-180' : undefined}
-//       onClick={onClick}
-//       disabled={disabled}
-//     />
-//   );
-// }
 
 function ChainSelectSection({
   isReview,
@@ -268,25 +239,14 @@ function RecipientSection({ isReview }: { isReview: boolean }) {
     setFieldValue('recipient', event.target.value);
   };
 
-  // COSMOS
   useEffect(() => {
-    let account: any = null;
+    let account: ChainAddress | undefined;
     // Check if the selected chain is in cosmosChainIds
     if (['celestia', 'stride'].includes(values.destination)) {
       account = accounts[ProtocolType.Cosmos].addresses.find(
         (address) => address.chainName === values.destination,
       );
     }
-    if (['celestia', 'stride'].includes(values.destination)) {
-      setPlaceholder(`${values.destination}1234...`);
-    } else {
-      setPlaceholder(defaultPlaceholder);
-    }
-  }, [cosmosAddress]);
-
-  // EVM
-  useEffect(()=>{
-    let account: any = null;
     if (['forma', 'sketchpad'].includes(values.destination)) {
       account = accounts[ProtocolType.Ethereum].addresses[0];
     }
@@ -298,11 +258,13 @@ function RecipientSection({ isReview }: { isReview: boolean }) {
       setFieldValue('recipient', '');
       setRecipientValue('');
     }
-  },[evmAddress])
 
- /*  useEffect(() => {
-   
-  }, [cosmosAddress, evmAddress, values.destination, accounts, setFieldValue]); */
+    if (['celestia', 'stride'].includes(values.destination)) {
+      setPlaceholder(`${values.destination}1234...`);
+    } else {
+      setPlaceholder(defaultPlaceholder);
+    }
+  }, [cosmosAddress, evmAddress, values.destination, accounts, setFieldValue]);
 
   return (
     <div>
@@ -380,18 +342,7 @@ function TokenBalance({
   );
 }
 
-// function TimeTransfer({ label, time }:
-// {
-//   label: string;
-//   time?: string | null;
-// }) {
-//   return (
-//     <div className="flex justify-between text-xs font-normal leading-4 text-secondary">
-//       {`${label}:`}
-//       <span className="text-primary font-medium">{`${time}`} minute</span>
-//     </div>
-//   );
-// }
+
 
 function ButtonSection({
   isReview,
@@ -456,46 +407,14 @@ function ButtonSection({
   );
 }
 
-// function MaxButton({ balance, disabled }: { balance?: TokenAmount; disabled?: boolean }) {
-//   const { values, setFieldValue } = useFormikContext<TransferFormValues>();
-//   const { origin, destination, tokenIndex } = values;
-//   const { accounts } = useAccounts();
-//   const { fetchMaxAmount, isLoading } = useFetchMaxAmount();
 
-//   const onClick = async () => {
-//     if (!balance || isNullish(tokenIndex) || disabled) return;
-//     const maxAmount = await fetchMaxAmount({ balance, origin, destination, accounts });
-//     if (isNullish(maxAmount)) return;
-//     const decimalsAmount = maxAmount.getDecimalFormattedAmount();
-//     const roundedAmount = new BigNumber(decimalsAmount).toFixed(4, BigNumber.ROUND_FLOOR);
-//     setFieldValue('amount', roundedAmount);
-//   };
-
-//   return (
-//     <SolidButton
-//       type="button"
-//       onClick={onClick}
-//       color="gray"
-//       disabled={disabled}
-//       classes="text-xs absolute right-0.5 top-2 bottom-0.5 px-2"
-//     >
-//       {isLoading ? (
-//         <div className="flex items-center">
-//           <SmallSpinner />
-//         </div>
-//       ) : (
-//         'MAX'
-//       )}
-//     </SolidButton>
-//   );
-// }
 
 function SelfButton({
   disabled,
   setRecipientValue,
 }: {
   disabled?: boolean;
-  setRecipientValue?: any;
+  setRecipientValue?: (s: string) => void;
 }) {
   const { values, setFieldValue } = useFormikContext<TransferFormValues>();
   const protocol = tryGetChainProtocol(values.destination) || ProtocolType.Ethereum;
@@ -509,16 +428,12 @@ function SelfButton({
     if (disabled) return;
     if (address) {
       setFieldValue('recipient', address);
-      setRecipientValue && setRecipientValue(address);
+      if (setRecipientValue) setRecipientValue(address.toString());
     } else {
       connectFn();
       setIsConnecting(true);
     }
-    // toast.warn(
-    //   `No account found for for chain ${getChainDisplayName(
-    //     values.destination,
-    //   )}, is your wallet connected?`,
-    // );
+
   };
 
   useEffect(() => {
@@ -542,20 +457,6 @@ function SelfButton({
 
 function ReviewDetails({ visible }: { visible: boolean }) {
   const { values } = useFormikContext<TransferFormValues>();
-  // const { tokenIndex } = values;
-  // const originToken = getTokenByIndex(tokenIndex);
-  // const originTokenSymbol = originToken?.symbol || '';
-  // const connection = originToken?.getConnectionForChain(destination);
-  // const destinationToken = connection?.token;
-  // const isNft = originToken?.isNft();
-
-  // const amountWei = isNft ? amount.toString() : toWei(amount, originToken?.decimals);
-
-  // const { isLoading: isApproveLoading, isApproveRequired } = useIsApproveRequired(
-  //   originToken,
-  //   amountWei,
-  //   visible,
-  // );
   const { fees } = useFeeQuotes(values, visible);
 
   // const isLoading = isApproveLoading || isQuoteLoading;
@@ -589,59 +490,6 @@ function ReviewDetails({ visible }: { visible: boolean }) {
         </span>
         <span className="text-right text-white text-xs font-medium min-w-[7rem]">{`<1 Minute`}</span>
       </p>
-      {/* <label className="mt-4 block uppercase text-sm text-gray-500 pl-0.5">Transactions</label>
-      <div className="mt-1.5 px-2.5 py-2 space-y-2 border border-gray-400 bg-black text-gray-400 text-sm break-all">
-        {isLoading ? (
-          <div className="py-6 flex items-center justify-center">
-            <SmallSpinner />
-          </div>
-        ) : (
-          <>
-            {isApproveRequired && (
-              <div>
-                <h4>Transaction 1: Approve Transfer</h4>
-                <div className="mt-1.5 ml-1.5 pl-2 border-l border-gray-400 space-y-1.5 text-xs">
-                  <p>{`Router Address: ${originToken?.addressOrDenom}`}</p>
-                  {originToken?.collateralAddressOrDenom && (
-                    <p>{`Collateral Address: ${originToken.collateralAddressOrDenom}`}</p>
-                  )}
-                </div>
-              </div>
-            )}
-            <div>
-              <h4>{`Transaction${isApproveRequired ? ' 2' : ''}: Transfer Remote`}</h4>
-              <div className="mt-1.5 ml-1.5 pl-2 border-l border-gray-400 space-y-1.5 text-xs">
-                {destinationToken?.addressOrDenom && (
-                  <p className="flex">
-                    <span className="min-w-[7rem]">Remote Token</span>
-                    <span>{destinationToken.addressOrDenom}</span>
-                  </p>
-                )}
-                <p className="flex">
-                  <span className="min-w-[7rem]">{isNft ? 'Token ID' : 'Amount'}</span>
-                  <span>{`${amount} ${originTokenSymbol}`}</span>
-                </p>
-                {fees?.localQuote && fees.localQuote.amount > 0n && (
-                  <p className="flex">
-                    <span className="min-w-[7rem]">Local Gas (est.)</span>
-                    <span>{`${fees.localQuote.getDecimalFormattedAmount().toFixed(4) || '0'} ${
-                      fees.localQuote.token.symbol || ''
-                    }`}</span>
-                  </p>
-                )}
-                {fees?.interchainQuote && fees.interchainQuote.amount > 0n && (
-                  <p className="flex">
-                    <span className="min-w-[7rem]">Interchain Gas</span>
-                    <span>{`${fees.interchainQuote.getDecimalFormattedAmount().toFixed(4) || '0'} ${
-                      fees.interchainQuote.token.symbol || ''
-                    }`}</span>
-                  </p>
-                )}
-              </div>
-            </div>
-          </>
-        )}
-      </div> */}
     </div>
   );
 }
@@ -691,3 +539,4 @@ async function validateForm(
     return { form: errorMsg };
   }
 }
+

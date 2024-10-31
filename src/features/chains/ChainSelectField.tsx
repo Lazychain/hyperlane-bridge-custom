@@ -1,6 +1,6 @@
 import { useField, useFormikContext } from 'formik';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
 import { ProtocolType } from '@hyperlane-xyz/utils';
 
@@ -11,6 +11,9 @@ import { useAccounts, useConnectFns, useDisconnectFns } from '../wallet/hooks/mu
 
 import { ChainSelectListModal } from './ChainSelectModal';
 import { formatAddress, getChainDisplayName } from './utils';
+import { ChainAddress } from '../wallet/hooks/types';
+import { ChainInfoWithoutEndpoints, Keplr, Window as keplrWindow } from '@keplr-wallet/types';
+import { ChainName } from '@hyperlane-xyz/sdk';
 
 type Props = {
   name: string;
@@ -20,6 +23,17 @@ type Props = {
   disabled?: boolean;
   transferType: string;
 };
+
+declare global {
+  interface Window extends keplrWindow {
+    keplr?: Keplr & {
+      ethereum: any;
+      getChainInfosWithoutEndpoints: (chainId: string) => Promise<ChainInfoWithoutEndpoints>;
+    }
+    ethereum?: any;
+  }
+
+}
 
 const cosmosChainIds = ['stride'];
 const evmChainIds = ['forma', 'sketchpad'];
@@ -33,7 +47,7 @@ export function ChainSelectField({ name, label, chains, onChange, disabled, tran
   const cosmosNumReady = accounts[ProtocolType.Cosmos].addresses.length;
   const evmNumReady = accounts[ProtocolType.Ethereum].addresses.length;
 
-  let account: any = '';
+  let account: ChainAddress | undefined;
   if (cosmosChainIds.includes(chainId)) {
     account = accounts[ProtocolType.Cosmos].addresses.find(
       (address) => address.chainName === chainId,
@@ -43,16 +57,29 @@ export function ChainSelectField({ name, label, chains, onChange, disabled, tran
     account = accounts[ProtocolType.Ethereum].addresses[0];
   }
 
-  const handleChange = (newChainId: ChainName) => {
+  /*const handleChange = (newChainId: ChainName) => {
     helpers.setValue(newChainId);
-    // Reset other fields on chain change
+     Reset other fields on chain change
     setFieldValue('recipient', '');
     setFieldValue('amount', '');
     setFieldValue('tokenIndex', 0);
     setChainId(newChainId);
 
     if (onChange) onChange(newChainId);
-  };
+  };*/
+
+  const handleChange = useCallback(
+    (newChainId: ChainName) => {
+      helpers.setValue(newChainId);
+      setFieldValue('recipient', '');
+      setFieldValue('amount', '');
+      setFieldValue('tokenIndex', 0);
+      setChainId(newChainId);
+
+      if (onChange) onChange(newChainId);
+    }, [helpers, onChange, setFieldValue]
+
+  )
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLocked, setIsLocked] = useState(false);
@@ -65,7 +92,7 @@ export function ChainSelectField({ name, label, chains, onChange, disabled, tran
   const disconnectFns = useDisconnectFns();
 
   const onDisconnectEnv = () => async () => {
-    let env: string = '';
+    let env;
     if (cosmosChainIds.includes(chainId)) {
       env = ProtocolType.Cosmos;
     } else {
@@ -77,7 +104,7 @@ export function ChainSelectField({ name, label, chains, onChange, disabled, tran
   };
 
   const onClickEnv = () => async () => {
-    let env: string = '';
+    let env;
     if (cosmosChainIds.includes(chainId)) {
       env = ProtocolType.Cosmos;
     } else {
@@ -85,13 +112,13 @@ export function ChainSelectField({ name, label, chains, onChange, disabled, tran
     }
 
     if (env == ProtocolType.Cosmos) {
-      if (process.env.NEXT_PUBLIC_NETWORK === 'testnet' && window && (window as any).keplr) {
-        const chains = await (window as any).keplr.getChainInfosWithoutEndpoints();
+      if (process.env.NEXT_PUBLIC_NETWORK === 'testnet' && window && window.keplr) {
+        const chains = await window.keplr.getChainInfosWithoutEndpoints();
         const hasStrideTestnet = chains.find((el: { chainId: string; }) => el.chainId === 'stride-internal-1')
           ? true
           : false;
         if (!hasStrideTestnet) {
-          await (window as any).keplr.experimentalSuggestChain({
+          await window.keplr.experimentalSuggestChain({
             chainId: 'stride-internal-1',
             chainName: 'Stride (Testnet)',
             rpc: 'https://stride.testnet-1.stridenet.co',
@@ -163,8 +190,8 @@ export function ChainSelectField({ name, label, chains, onChange, disabled, tran
       handleChange('stride');
     }
 
-   
-  }, [transferType, label]);
+
+  }, [transferType, label, handleChange]);
 
   return (
     <div className="flex flex-col items-start w-full">

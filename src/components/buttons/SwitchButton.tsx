@@ -1,5 +1,5 @@
 import { ChangeEvent } from 'react';
-import styles from 'src/components/buttons/SwitchButton.module.css';
+import styles from './SwitchButton.module.css';
 
 interface Props {
   checked: boolean;

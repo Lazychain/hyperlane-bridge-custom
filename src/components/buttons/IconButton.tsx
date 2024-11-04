@@ -7,7 +7,7 @@ export interface IconButtonProps {
   classes?: string;
   onClick?: () => void;
   disabled?: boolean;
-  imgSrc?: any;
+  imgSrc?: string;
   title?: string;
   type?: 'button' | 'submit';
   passThruProps?: any;

@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
-import CheckmarkIcon from '../../images/icons/checkmark.svg';
+import  CheckmarkIcon  from '../../images/icons/checkmark.svg';
 import CopyIcon from '../../images/icons/copy-stack.svg';
 import { tryClipboardSet } from '../../utils/clipboard';
 

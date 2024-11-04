@@ -178,7 +178,7 @@ function AmountSection({
   return (
     <div className="flex-1">
       <div className="flex justify-between pr-1">
-        <label htmlFor="amount" className="block text-sm text-secondary leading-5 font-medium">
+        <label htmlFor="amount-withdraw" className="block text-sm text-secondary leading-5 font-medium">
           {transferType === 'deposit' ? 'Amount to Deposit' : 'Amount to Withdraw'}
         </label>
         {/* <TokenBalance label="My balance" balance={balance} /> */}
@@ -258,13 +258,25 @@ function RecipientSection({ isReview }: { isReview: boolean }) {
       setFieldValue('recipient', '');
       setRecipientValue('');
     }
+  }, [])
 
+  useEffect(()=>{
+    let account: ChainAddress | undefined;
     if (['celestia', 'stride'].includes(values.destination)) {
       setPlaceholder(`${values.destination}1234...`);
     } else {
       setPlaceholder(defaultPlaceholder);
     }
-  }, [cosmosAddress, evmAddress, values.destination, accounts, setFieldValue]);
+    if (account?.address) {
+      setFieldValue('recipient', account?.address);
+      setRecipientValue(account?.address);
+    } else {
+      setFieldValue('recipient', '');
+      setRecipientValue('');
+    }
+
+  }, [evmAddress])
+  
 
   return (
     <div>
@@ -276,6 +288,7 @@ function RecipientSection({ isReview }: { isReview: boolean }) {
       </div>
       <div className="relative w-full">
         <TextField
+          id='recipient'
           name="recipient"
           placeholder={placeholder}
           style={{
@@ -417,7 +430,7 @@ function SelfButton({
   setRecipientValue?: (s: string) => void;
 }) {
   const { values, setFieldValue } = useFormikContext<TransferFormValues>();
-  const protocol = tryGetChainProtocol(values.destination) || ProtocolType.Ethereum;
+  const protocol: ProtocolType = tryGetChainProtocol(values.destination) || ProtocolType.Ethereum;
   const connectFns = useConnectFns();
   const connectFn = connectFns[protocol];
 

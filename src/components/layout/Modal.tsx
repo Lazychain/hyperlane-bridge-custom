@@ -22,7 +22,7 @@ export function Modal({
 }>) {
   return (
     <Transition appear show={isOpen} as={Fragment}>
-      <Dialog as="div" className="relative z-30" onClose={close}>
+      <Dialog open={isOpen} as="div" className="relative z-30 bg-pink-500" onClose={close}>
         <TransitionChild
           as={Fragment}
           enter="ease-out duration-300"

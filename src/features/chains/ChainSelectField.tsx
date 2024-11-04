@@ -59,7 +59,7 @@ export function ChainSelectField({ name, label, chains, onChange, disabled, tran
 
   /*const handleChange = (newChainId: ChainName) => {
     helpers.setValue(newChainId);
-     Reset other fields on chain change
+    // Reset other fields on chain change
     setFieldValue('recipient', '');
     setFieldValue('amount', '');
     setFieldValue('tokenIndex', 0);
@@ -92,7 +92,7 @@ export function ChainSelectField({ name, label, chains, onChange, disabled, tran
   const disconnectFns = useDisconnectFns();
 
   const onDisconnectEnv = () => async () => {
-    let env;
+    let env: ProtocolType;
     if (cosmosChainIds.includes(chainId)) {
       env = ProtocolType.Cosmos;
     } else {
@@ -104,7 +104,7 @@ export function ChainSelectField({ name, label, chains, onChange, disabled, tran
   };
 
   const onClickEnv = () => async () => {
-    let env;
+    let env: ProtocolType;
     if (cosmosChainIds.includes(chainId)) {
       env = ProtocolType.Cosmos;
     } else {
@@ -189,12 +189,14 @@ export function ChainSelectField({ name, label, chains, onChange, disabled, tran
     if (transferType == 'withdraw' && label == 'To') {
       handleChange('stride');
     }
-
+    if (transferType == 'deposit' && label == 'From') {
+      handleChange('celestia');
+    }
 
   }, [transferType, label, handleChange]);
 
   return (
-    <div className="flex flex-col items-start w-full">
+    <div className="flex flex-col items-start w-full ">
       <div className="flex justify-between pr-1">
         <label htmlFor={name} className="block text-sm text-secondary leading-5 font-medium">
           {label}
@@ -202,6 +204,7 @@ export function ChainSelectField({ name, label, chains, onChange, disabled, tran
       </div>
       <div className="w-full flex gap-[12px] justify-between items-end">
         <button
+          id={field.name}
           type="button"
           name={field.name}
           className={`mt-1.5 w-9/12 border-[1px] border-solid border-[#8C8D8F] h-[48px] ${disabled ? styles.disabled : styles.enabled
@@ -255,7 +258,7 @@ export function ChainSelectField({ name, label, chains, onChange, disabled, tran
               disabled={disabled}
               type="button"
               onClick={onClickEnv()}
-              className={`w-4/12 border-[0.5px] border-white border-solid bg-white p-2 h-[48px] flex items-center justify-center hover:bg-[#FFFFFFCC] ${disabled ? styles.disabled : styles.enabled
+              className={`w-4/12 border-[5px] border-red-800 border-solid bg-white p-2 h-[48px] flex items-center justify-center hover:bg-[#FFFFFFCC] ${disabled ? styles.disabled : styles.enabled
                 }`}
             >
               <span
@@ -264,6 +267,7 @@ export function ChainSelectField({ name, label, chains, onChange, disabled, tran
               >
                 CONNECT
               </span>
+
             </button>
           )}
 
@@ -292,6 +296,7 @@ export function ChainSelectField({ name, label, chains, onChange, disabled, tran
         chains={chains}
         onSelect={handleChange}
       />
+
     </div>
   );
 }

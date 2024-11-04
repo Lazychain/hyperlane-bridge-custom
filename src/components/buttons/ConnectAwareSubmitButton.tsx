@@ -27,7 +27,7 @@ export function ConnectAwareSubmitButton<FormValues = any>({
   // Flag for if form is in input vs review mode
   const [isReview, setIsReview] = useState(false);
 
-  const protocol = tryGetChainProtocol(chainName) || ProtocolType.Ethereum;
+  const protocol: ProtocolType = tryGetChainProtocol(chainName) || ProtocolType.Ethereum;
   const connectFns = useConnectFns();
   const connectFn = connectFns[protocol];
 
@@ -42,7 +42,7 @@ export function ConnectAwareSubmitButton<FormValues = any>({
   const amount = parseFloat(values.amount);
 
   let color: any;
-  let content;
+  let content; // Revisar
   if (amount === 0) {
     content = 'Invalid amount';
     color = 'red';

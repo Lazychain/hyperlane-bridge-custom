@@ -22,7 +22,7 @@ export function ChainSelectListModal({
   };
 
   return (
-    <Modal width={'max-w-[405px]'} isOpen={isOpen} title="Select Chain" close={close}>
+    <Modal width={'max-w-[405px]'} isOpen={isOpen} title="Select Chain" close={close}  >
       <div className="mt-4 flex flex-col space-y-1">
         {chains.map((c) => (
           <button

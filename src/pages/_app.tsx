@@ -9,7 +9,6 @@ import { ErrorBoundary } from '../components/errors/ErrorBoundary';
 import { AppLayout } from '../components/layout/AppLayout';
 import { CosmosWalletContext } from '../features/wallet/context/CosmosWalletContext';
 import { EvmWalletContext } from '../features/wallet/context/EvmWalletContext';
-//import { SolanaWalletContext } from '../features/wallet/context/SolanaWalletContext';
 import '../styles/fonts.css';
 import '../styles/globals.css';
 import { useIsSsr } from '../utils/ssr';
@@ -31,20 +30,20 @@ export default function App({ Component, pageProps }: AppProps) {
   }
 
   return (
-    
-      <ErrorBoundary>
-        <EvmWalletContext>
-          <CosmosWalletContext>
-            <QueryClientProvider client={reactQueryClient}>
-              <AppLayout>
-                <Component {...pageProps} />
-              </AppLayout>
-            </QueryClientProvider>
-            <ToastContainer transition={Zoom} position={'bottom-right'} limit={2} />
-          </CosmosWalletContext>
-        </EvmWalletContext>
-      </ErrorBoundary>
-    
+
+    <ErrorBoundary>
+      <EvmWalletContext>
+        <CosmosWalletContext>
+          <QueryClientProvider client={reactQueryClient}>
+            <AppLayout>
+              <Component {...pageProps} />
+            </AppLayout>
+          </QueryClientProvider>
+          <ToastContainer transition={Zoom} position={'bottom-right'} limit={2} />
+        </CosmosWalletContext>
+      </EvmWalletContext>
+    </ErrorBoundary>
+
 
   );
 }

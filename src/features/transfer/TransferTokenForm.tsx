@@ -258,9 +258,9 @@ function RecipientSection({ isReview }: { isReview: boolean }) {
       setFieldValue('recipient', '');
       setRecipientValue('');
     }
-  }, [])
+  }, [cosmosAddress, accounts, setFieldValue, values.destination])
 
-  useEffect(()=>{
+  useEffect(() => {
     let account: ChainAddress | undefined;
     if (['celestia', 'stride'].includes(values.destination)) {
       setPlaceholder(`${values.destination}1234...`);
@@ -275,8 +275,8 @@ function RecipientSection({ isReview }: { isReview: boolean }) {
       setRecipientValue('');
     }
 
-  }, [evmAddress])
-  
+  }, [evmAddress, setFieldValue, values.destination])
+
 
   return (
     <div>

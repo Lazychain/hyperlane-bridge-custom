@@ -1,8 +1,7 @@
 /** @type { import('next').NextConfig } */
 
 
-import version from './package.json' assert{type: 'json'};
-//import withSentryConfig from "@sentry/nextjs";
+//import version from './package.json' assert{type: 'json'};
 /*const withBundleAnalyzer = require('@next/bundle-analyzer')({
 enabled: process.env.ANALYZE === 'true',
 })*/
@@ -94,23 +93,11 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
 
-  sentry: {
-    hideSourceMaps: true,
-    tunnelRoute: "/monitoring-tunnel",
-  },
+
 
 }
 
-/*const sentryWebpackPluginOptions = {
-  org: "hyperlane",
-  project: "warp-ui",
-  authToken: process.env.SENTRY_AUTH_TOKEN,
-  bundleSizeOptimizations: {
-    excludeDebugStatements: true,
-    excludeReplayIframe: true,
-    excludeReplayShadowDom: true,
-  },
-};*/
+
 
 //module.exports = withBundleAnalyzer(withSentryConfig(nextConfig, sentryWebpackPluginOptions));
 export default nextConfig;

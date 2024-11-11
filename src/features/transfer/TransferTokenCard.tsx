@@ -16,7 +16,7 @@ export default function TransferTokenCard() {
   };
 
   return (
-    <Card className="w-100 relative">
+    <Card className="border_container_card">
       <>
         <div className="relative flex items-start justify-between z-20">
           <TransferTokenTab

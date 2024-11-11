@@ -111,11 +111,26 @@ input[type='datetime-local'] {
 /*
 Responsiveness
 ==============
+1250
 */
-@media only screen and (max-width: 479px) {
+@media only screen and (min-width: 761px ) {
+  main {
+    background-image: url("../../public/backgrounds/lazy_fontend_desktop.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+  }
+}
+@media only screen and (max-width: 760px) {
   /* phones */
   html {
     font-size: 0.9rem;
+  }
+  main {
+    background-image: url("../../public/backgrounds/lazy_frontend_mobile.jpg");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
   }
 }
 @media only screen and (max-width: 359px) {
@@ -245,14 +260,14 @@ Menu Burger
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: #fff;
+  background-image: url("../images/icons/hamburger.svg");
   filter: invert(1);
   position: relative;
   flex-shrink: 0;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 1.5rem;
+  height: 0.5rem;
   padding: 0.5rem;
-  &:before,
+  /*&:before,
   &:after {
     content: '';
     height: 0.1875rem;
@@ -273,7 +288,7 @@ Menu Burger
     &:after {
       width: rem(24);
     }
-  }
+  }*/
 }
 /*
 Cosmos Wallet Connect
@@ -281,4 +296,18 @@ Cosmos Wallet Connect
 */
 .x1bv961 {
   width: 0;
+}
+
+/* Border Card Personalize */
+.border_container_card {
+  width: 24rem;
+  max-width: 100%; 
+  position: relative;
+  background-color: #0E0E0E;
+  border-style: solid;
+  border-width: 5px;
+  /*border-color: linear-gradient(90deg, rgba(32,65,14,1) 7%, rgba(25,194,68,1) 100%);*/
+  border-image: linear-gradient(180deg, rgba(32, 65, 14) 7%,  rgba(25, 194, 68) 100%) 1;
+  overflow: auto;
+ 
 }

@@ -5,6 +5,7 @@ import { useCallback, useMemo } from 'react';
 import { useAccount, useDisconnect } from 'wagmi';
 
 import { ProviderType, TypedTransactionReceipt, WarpTypedTransaction } from '@hyperlane-xyz/sdk';
+
 import { ProtocolType, assert, sleep } from '@hyperlane-xyz/utils';
 
 import { logger } from '../../../utils/logger';
@@ -86,7 +87,7 @@ export function useEvmTransactionFns(): ChainTransactionFns {
       if (activeChainName && activeChainName !== chainName) await onSwitchNetwork(chainName);
 
       // Since the network switching is not foolproof, we also force a network check here
-      const chainId = getChainMetadata(chainName).chainId as number;
+      const chainId = getChainMetadata(chainName).chainId as any;
       logger.debug('Checking wallet current chain');
       const chains = connectorConfig.chains;
       assert(chains.find((chain: { id: number }) => chain.id == chainId),

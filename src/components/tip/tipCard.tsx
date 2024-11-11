@@ -11,7 +11,7 @@ export function TipCard() {
   const [show, setShow] = useState(config.showTipBox);
   if (!show) return null;
   return (
-    <Card className="w-100 sm:w-[31rem]">
+    <Card className="border_container_card  sm:w-[31rem]">
       <h2 className="text-blue-500 sm:text-lg">
         {`To bridge ECLIP from Neutron, you'll need $TIA for gas.`}
       </h2>

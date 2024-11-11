@@ -1,19 +1,20 @@
 import { useField, useFormikContext } from 'formik';
 import Image from 'next/image';
 import { useEffect, useState, useCallback } from 'react';
+import { useAccounts, useConnectFns, useDisconnectFns } from '../wallet/hooks/multiProtocol';
 
 import { ProtocolType } from '@hyperlane-xyz/utils';
 
-import { ChainLogo } from '../../components/icons/ChainLogo';
-import ChevronIcon from '../../images/icons/chevron-down.svg';
+import { ChainLogo } from '@/components/icons/ChainLogo';
+import ChevronIcon from '@/images/icons/chevron-down.svg';
 import { TransferFormValues } from '../transfer/types';
-import { useAccounts, useConnectFns, useDisconnectFns } from '../wallet/hooks/multiProtocol';
+
 
 import { ChainSelectListModal } from './ChainSelectModal';
 import { formatAddress, getChainDisplayName } from './utils';
 import { ChainAddress } from '../wallet/hooks/types';
 import { ChainInfoWithoutEndpoints, Keplr, Window as keplrWindow } from '@keplr-wallet/types';
-import { ChainName } from '@hyperlane-xyz/sdk';
+
 
 type Props = {
   name: string;
@@ -27,16 +28,16 @@ type Props = {
 declare global {
   interface Window extends keplrWindow {
     keplr?: Keplr & {
-      ethereum: any;
+      ethereum: string;
       getChainInfosWithoutEndpoints: (chainId: string) => Promise<ChainInfoWithoutEndpoints>;
     }
-    ethereum?: any;
+    ethereum?;
   }
 
 }
 
-const cosmosChainIds = ['stride'];
-const evmChainIds = ['forma', 'sketchpad'];
+const cosmosChainIds = ['stride', 'celestia'];
+const evmChainIds = ['forma', 'sketchpad']; // sketchpad
 
 export function ChainSelectField({ name, label, chains, onChange, disabled, transferType }: Props) {
   const [field, , helpers] = useField<ChainName>(name);
@@ -114,7 +115,7 @@ export function ChainSelectField({ name, label, chains, onChange, disabled, tran
     if (env == ProtocolType.Cosmos) {
       if (process.env.NEXT_PUBLIC_NETWORK === 'testnet' && window && window.keplr) {
         const chains = await window.keplr.getChainInfosWithoutEndpoints();
-        const hasStrideTestnet = chains.find((el: { chainId: string; }) => el.chainId === 'stride-internal-1')
+        const hasStrideTestnet = chains.find((el) => el.chainId === 'stride-internal-1')
           ? true
           : false;
         if (!hasStrideTestnet) {
@@ -176,10 +177,7 @@ export function ChainSelectField({ name, label, chains, onChange, disabled, tran
 
   useEffect(() => {
     const isMainnet = process.env.NEXT_PUBLIC_NETWORK === 'mainnet';
-    if (
-      (transferType == 'withdraw' && label == 'From') ||
-      (transferType == 'deposit' && label == 'To')
-    ) {
+    if ((transferType == 'withdraw' && label == 'From') || (transferType == 'deposit' && label == 'To')) {
       handleChange(isMainnet ? 'forma' : 'sketchpad');
       setIsLocked(true);
     } else {
@@ -192,7 +190,6 @@ export function ChainSelectField({ name, label, chains, onChange, disabled, tran
     if (transferType == 'deposit' && label == 'From') {
       handleChange('celestia');
     }
-
   }, [transferType, label, handleChange]);
 
   return (
@@ -258,7 +255,7 @@ export function ChainSelectField({ name, label, chains, onChange, disabled, tran
               disabled={disabled}
               type="button"
               onClick={onClickEnv()}
-              className={`w-4/12 border-[5px] border-red-800 border-solid bg-white p-2 h-[48px] flex items-center justify-center hover:bg-[#FFFFFFCC] ${disabled ? styles.disabled : styles.enabled
+              className={`w-4/12 border-[2px] border-ye-600 border-solid bg-white p-2 h-[48px] flex items-center justify-center hover:bg-[#FFFFFFCC] ${disabled ? styles.disabled : styles.enabled
                 }`}
             >
               <span

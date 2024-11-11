@@ -8,6 +8,12 @@ import { ChainLogo } from '../../components/icons/ChainLogo';
 import { Modal } from '../../components/layout/Modal';
 
 import { useConnectFns } from './hooks/multiProtocol';
+import { Window as KeplrWindow } from '@keplr-wallet/types';
+
+declare global {
+  interface Window extends KeplrWindow { }
+}
+
 
 export function WalletEnvSelectionModal({
   isOpen,
@@ -23,13 +29,13 @@ export function WalletEnvSelectionModal({
 
   const onClickEnv = (env: ProtocolType) => async () => {
     if (env == ProtocolType.Cosmos) {
-      if (process.env.NEXT_PUBLIC_NETWORK === 'testnet' && window && (window as any).keplr) {
-        const chains = await (window as any).keplr.getChainInfosWithoutEndpoints();
+      if (process.env.NEXT_PUBLIC_NETWORK === 'testnet' && window && window.keplr) {
+        const chains = await window.keplr.getChainInfosWithoutEndpoints();
         const hasStrideTestnet = chains.find((el: { chainId: string; }) => el.chainId === 'stride-internal-1')
           ? true
           : false;
         if (!hasStrideTestnet) {
-          await (window as any).keplr.experimentalSuggestChain({
+          await window.keplr.experimentalSuggestChain({
             chainId: 'stride-internal-1',
             chainName: 'Stride (Testnet)',
             rpc: 'https://stride.testnet-1.stridenet.co',

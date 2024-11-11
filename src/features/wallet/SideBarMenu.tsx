@@ -37,7 +37,7 @@ export function SideBarMenu({
   const { readyAccounts } = useAccounts();
   const didMountRef = useRef(false);
 
-  const { transfers, resetTransfers, transferLoading } = useStore((s: { transfers: any; resetTransfers: any; transferLoading: any; }) => ({
+  const { transfers, resetTransfers, transferLoading } = useStore((s: { transfers: TransferContext[]; resetTransfers: () => void; transferLoading: boolean; }) => ({
     transfers: s.transfers,
     resetTransfers: s.resetTransfers,
     transferLoading: s.transferLoading,
@@ -70,9 +70,8 @@ export function SideBarMenu({
   return (
     <>
       <div
-        className={`fixed right-0 top-0 h-full w-88 bg-white bg-opacity-95 shadow-lg transform ease-in duration-100 transition-transform z-30 ${
-          isMenuOpen ? 'translate-x-0' : 'translate-x-full'
-        }`}
+        className={`fixed right-0 top-0 h-full w-88 bg-white bg-opacity-95 shadow-lg transform ease-in duration-100 transition-transform z-30 ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}
       >
         {isMenuOpen && (
           <button
@@ -246,7 +245,7 @@ function Icon({
   size,
   className,
 }: {
-  src: any;
+  src: string;
   alt?: string;
   size?: number;
   className?: string;

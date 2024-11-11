@@ -39,7 +39,7 @@ export function useAccounts(): {
       accounts: {
         [ProtocolType.Ethereum]: evmAccountInfo,
         [ProtocolType.Cosmos]: cosmAccountInfo,
-        
+
       },
       readyAccounts,
     }),
@@ -157,7 +157,7 @@ export function useTransactionFns(): Record<ProtocolType, ChainTransactionFns> {
     () => ({
       [ProtocolType.Ethereum]: { sendTransaction: onSendEvmTx, switchNetwork: onSwitchEvmNetwork },
       [ProtocolType.Cosmos]: { sendTransaction: onSendCosmTx, switchNetwork: onSwitchCosmNetwork },
-      
+
     }),
     [
       onSendEvmTx,
